@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnmannedAerialVehicle.MonitoringGroundStation", "UnmannedAerialVehicle.MonitoringGroundStation\UnmannedAerialVehicle.MonitoringGroundStation.csproj", "{4B8A32BC-D069-42F5-A0D4-7C98955C890C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealTimeGraphX", "RealTimeGraphX\RealTimeGraphX.csproj", "{219B769F-B756-4F93-8CC6-1AA69BF23A62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeGraphX.WPF", "RealTimeGraphX.WPF\RealTimeGraphX.WPF.csproj", "{6B9774F7-960D-438E-AD81-C6B9BE328D50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeGraphX.WPF.Demo", "RealTimeGraphX.WPF.Demo\RealTimeGraphX.WPF.Demo.csproj", "{B822CBD9-1113-4668-85C9-22AA9C24CE60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAV.MonitoringGroundStation", "UAV.MonitoringGroundStation\UAV.MonitoringGroundStation.csproj", "{59F95525-0559-47DE-8EA1-E54D0C89A9B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4B8A32BC-D069-42F5-A0D4-7C98955C890C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B8A32BC-D069-42F5-A0D4-7C98955C890C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B8A32BC-D069-42F5-A0D4-7C98955C890C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B8A32BC-D069-42F5-A0D4-7C98955C890C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{219B769F-B756-4F93-8CC6-1AA69BF23A62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{219B769F-B756-4F93-8CC6-1AA69BF23A62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{219B769F-B756-4F93-8CC6-1AA69BF23A62}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{B822CBD9-1113-4668-85C9-22AA9C24CE60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B822CBD9-1113-4668-85C9-22AA9C24CE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B822CBD9-1113-4668-85C9-22AA9C24CE60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

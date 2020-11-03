@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UAV.MonitoringGroundStation.ViewModels;
 
-namespace UnmannedAerialVehicle.MonitoringGroundStation
+namespace UAV.MonitoringGroundStation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,6 +24,7 @@ namespace UnmannedAerialVehicle.MonitoringGroundStation
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }

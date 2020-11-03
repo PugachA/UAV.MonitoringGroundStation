@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B8A32BC-D069-42F5-A0D4-7C98955C890C}</ProjectGuid>
+    <ProjectGuid>{59F95525-0559-47DE-8EA1-E54D0C89A9B1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>UnmannedAerialVehicle.MonitoringGroundStation</RootNamespace>
-    <AssemblyName>UnmannedAerialVehicle.MonitoringGroundStation</AssemblyName>
+    <RootNamespace>UAV.MonitoringGroundStation</RootNamespace>
+    <AssemblyName>UAV.MonitoringGroundStation</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="WpfGraphControl.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +71,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -94,6 +101,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RealTimeGraphX.WPF\RealTimeGraphX.WPF.csproj">
+      <Project>{6B9774F7-960D-438E-AD81-C6B9BE328D50}</Project>
+      <Name>RealTimeGraphX.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RealTimeGraphX\RealTimeGraphX.csproj">
+      <Project>{219B769F-B756-4F93-8CC6-1AA69BF23A62}</Project>
+      <Name>RealTimeGraphX</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

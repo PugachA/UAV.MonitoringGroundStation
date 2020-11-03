@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UnmannedAerialVehicle.MonitoringGroundStation")]
+[assembly: AssemblyTitle("UAV.MonitoringGroundStation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("UnmannedAerialVehicle.MonitoringGroundStation")]
+[assembly: AssemblyProduct("UAV.MonitoringGroundStation")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
