@@ -9,8 +9,8 @@
     <Style TargetType="{x:Type local:WpfGraphControl}">
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="BorderBrush" Value="#FF2E2E2E"></Setter>
-        <Setter Property="Padding" Value="20 20 30 20"></Setter>
-        <Setter Property="FontSize" Value="11"></Setter>
+        <Setter Property="Padding" Value="10 10 20 10"></Setter>
+        <Setter Property="FontSize" Value="10"></Setter>
         <Setter Property="Foreground" Value="DodgerBlue"></Setter>
         <Setter Property="Background">
             <Setter.Value>
@@ -34,7 +34,7 @@
                                 <RowDefinition Height="35"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>
+                                <ColumnDefinition Width="35"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
 

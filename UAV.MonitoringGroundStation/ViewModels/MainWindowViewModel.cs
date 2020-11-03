@@ -14,10 +14,25 @@ namespace UAV.MonitoringGroundStation.ViewModels
 {
     public class MainWindowViewModel
     {
+        private string _background = "Red";
+        public string BackColor
+        {
+            get
+            {
+                return _background;
+            }
+
+            set
+            {
+                _background = value;
+            }
+        }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller1 { get; set; }
-
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> MultiController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller2 { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller3 { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller4 { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller5 { get; set; }
 
         public MainWindowViewModel()
         {
@@ -47,40 +62,56 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 Stroke = Colors.DodgerBlue,
             });
 
-            MultiController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            MultiController.Range.MinimumY = 0;
-            MultiController.Range.MaximumY = 1080;
-            MultiController.Range.MaximumX = TimeSpan.FromSeconds(10);
-            MultiController.Range.AutoY = true;
+            Controller2 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            Controller2.Range.MinimumY = 0;
+            Controller2.Range.MaximumY = 1080;
+            Controller2.Range.MaximumX = TimeSpan.FromSeconds(10);
+            Controller2.Range.AutoY = true;
+            Controller2.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            MultiController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            Controller2.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series 1",
-                Stroke = Colors.Red,
+                Name = "Series",
+                Stroke = Colors.DodgerBlue,
             });
 
-            MultiController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            Controller3 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            Controller3.Range.MinimumY = 0;
+            Controller3.Range.MaximumY = 1080;
+            Controller3.Range.MaximumX = TimeSpan.FromSeconds(10);
+            Controller3.Range.AutoY = true;
+            Controller3.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+
+            Controller3.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series 2",
-                Stroke = Colors.Green,
+                Name = "Series",
+                Stroke = Colors.DodgerBlue,
             });
 
-            MultiController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            Controller4 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            Controller4.Range.MinimumY = 0;
+            Controller4.Range.MaximumY = 1080;
+            Controller4.Range.MaximumX = TimeSpan.FromSeconds(10);
+            Controller4.Range.AutoY = true;
+            Controller4.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+
+            Controller4.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series 3",
-                Stroke = Colors.Blue,
+                Name = "Series",
+                Stroke = Colors.DodgerBlue,
             });
 
-            MultiController.DataSeriesCollection.Add(new WpfGraphDataSeries()
-            {
-                Name = "Series 4",
-                Stroke = Colors.Yellow,
-            });
+            Controller5 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            Controller5.Range.MinimumY = 0;
+            Controller5.Range.MaximumY = 1080;
+            Controller5.Range.MaximumX = TimeSpan.FromSeconds(10);
+            Controller5.Range.AutoY = true;
+            Controller5.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            MultiController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            Controller5.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series 5",
-                Stroke = Colors.Gray,
+                Name = "Series",
+                Stroke = Colors.DodgerBlue,
             });
 
             Stopwatch watch = new Stopwatch();
@@ -92,31 +123,15 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 {
                     var y = System.Windows.Forms.Cursor.Position.Y;
 
-                    List<DoubleDataPoint> yy = new List<DoubleDataPoint>()
-                    {
-                        y,
-                        y + 20,
-                        y + 40,
-                        y + 60,
-                        y + 80,
-                    };
-
                     var x = watch.Elapsed;
-
-                    List<TimeSpanDataPoint> xx = new List<TimeSpanDataPoint>()
-                    {
-                        x,
-                        x,
-                        x,
-                        x,
-                        x
-                    };
 
                     Controller.PushData(x, y);
                     Controller1.PushData(x, y);
-                    MultiController.PushData(xx, yy);
-
-                    Thread.Sleep(30);
+                    Controller2.PushData(x, y);
+                    Controller3.PushData(x, y);
+                    Controller4.PushData(x, y);
+                    Controller5.PushData(x, y);
+                    Thread.Sleep(10);
                 }
             });
         }
