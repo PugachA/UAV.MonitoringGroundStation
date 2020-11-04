@@ -1,4 +1,5 @@
-﻿using RealTimeGraphX;
+﻿using PrimaryFlightDisplay;
+using RealTimeGraphX;
 using RealTimeGraphX.DataPoints;
 using RealTimeGraphX.WPF;
 using System;
@@ -14,19 +15,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
 {
     public class MainWindowViewModel
     {
-        private string _background = "Red";
-        public string BackColor
-        {
-            get
-            {
-                return _background;
-            }
-
-            set
-            {
-                _background = value;
-            }
-        }
+        public MainController PFDController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller1 { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller2 { get; set; }
@@ -36,6 +25,9 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
         public MainWindowViewModel()
         {
+            PFDController = new MainController();
+            PFDController.Draw();
+
             Controller = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
             Controller.Range.MinimumY = 0;
             Controller.Range.MaximumY = 1080;

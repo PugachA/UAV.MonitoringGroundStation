@@ -106,6 +106,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PrimaryFlightDisplay\PrimaryFlightDisplay.csproj">
+      <Project>{26f0de93-09f3-401d-b418-897c696e861b}</Project>
+      <Name>PrimaryFlightDisplay</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RealTimeGraphX.WPF\RealTimeGraphX.WPF.csproj">
       <Project>{6B9774F7-960D-438E-AD81-C6B9BE328D50}</Project>
       <Name>RealTimeGraphX.WPF</Name>

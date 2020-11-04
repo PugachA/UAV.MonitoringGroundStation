@@ -2,8 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:UAV.MonitoringGroundStation"
+             xmlns:pfd="clr-namespace:PrimaryFlightDisplay;assembly=PrimaryFlightDisplay"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <pfd:MainController x:Key="MainController"/>
+
+        <BitmapImage x:Key="PitchIndicatorImage" UriSource="pack://application:,,/PrimaryFlightDisplay;Images\pitch_indicator.png"/>
+        <BitmapImage x:Key="PitchOpacityMaskImage" UriSource="pack://application:,,/PrimaryFlightDisplay;Images\pitch_opacity_mask.png"/>
+        <BitmapImage x:Key="PitchScaleImage" UriSource="pack://application:,,/PrimaryFlightDisplay;Images\pitch_scale.png"/>
+        <BitmapImage x:Key="RollIndicatorImage" UriSource="pack://application:,,/PrimaryFlightDisplay;Images\roll_indicator.png"/>
+        <BitmapImage x:Key="RollScaleImage" UriSource="pack://application:,,/PrimaryFlightDisplay;Images\roll_scale.png"/>
     </Application.Resources>
 </Application>

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeGraphX.WPF.Demo", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAV.MonitoringGroundStation", "UAV.MonitoringGroundStation\UAV.MonitoringGroundStation.csproj", "{59F95525-0559-47DE-8EA1-E54D0C89A9B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimaryFlightDisplay", "PrimaryFlightDisplay\PrimaryFlightDisplay.csproj", "{26F0DE93-09F3-401D-B418-897C696E861B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59F95525-0559-47DE-8EA1-E54D0C89A9B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26F0DE93-09F3-401D-B418-897C696E861B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26F0DE93-09F3-401D-B418-897C696E861B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26F0DE93-09F3-401D-B418-897C696E861B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26F0DE93-09F3-401D-B418-897C696E861B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

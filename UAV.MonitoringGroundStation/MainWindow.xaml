@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UAV.MonitoringGroundStation"
         xmlns:viewModel="clr-namespace:UAV.MonitoringGroundStation.ViewModels"
+        xmlns:pfd="clr-namespace:PrimaryFlightDisplay;assembly=PrimaryFlightDisplay"
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:realTimeGraphX="clr-namespace:RealTimeGraphX.WPF;assembly=RealTimeGraphX.WPF"
         mc:Ignorable="d"
-        Title="UAV MonitoringGroundStation" Height="557" Width="1168.5" d:DataContext="{d:DesignData Type=viewModel:MainWindowViewModel, IsDesignTimeCreatable=False}">
+        Title="UAV MonitoringGroundStation" Height="700" Width="1200" d:DataContext="{d:DesignData Type=viewModel:MainWindowViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <collections:ArrayList x:Key="colors">
             <Color>DodgerBlue</Color>
@@ -27,65 +28,149 @@
     </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        <TabControl >
+            <TabItem Header="Single Series">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
 
-        <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller}" Grid.Row="0" Grid.Column="0" />
-        <ListBox ItemsSource="{Binding Controller.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}">
-                        </CheckBox>
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller}" Grid.Row="0" Grid.Column="0" />
+                    <ListBox ItemsSource="{Binding Controller.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}">
+                                    </CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller1}" Grid.Row="0" Grid.Column="1" />
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller2}" Grid.Row="0" Grid.Column="2" />
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller3}" Grid.Row="1" Grid.Column="0" />
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller4}" Grid.Row="1" Grid.Column="1" />
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller5}" Grid.Row="1" Grid.Column="2" />
+
+                    <Border Grid.RowSpan="2" Grid.Column="3" Margin="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="5">
+                        <StackPanel>
+                            <TextBlock FontSize="10">Duration</TextBlock>
+                            <TextBox Margin="0 5 0 0" Text="{Binding Controller.Range.MaximumX,Mode=TwoWay}"></TextBox>
+
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Refresh Rate</TextBlock>
+                            <TextBox Margin="0 5 0 0" Text="{Binding Controller.RefreshRate,Mode=TwoWay}"></TextBox>
+
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Minimum Y</TextBlock>
+                            <TextBox Margin="0 5 0 0" Text="{Binding Controller.Range.MinimumY,Mode=TwoWay}"></TextBox>
+
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Maximum Y</TextBlock>
+                            <TextBox Margin="0 5 0 0" Text="{Binding Controller.Range.MaximumY,Mode=TwoWay}"></TextBox>
+
+                            <CheckBox Margin="0 5 0 0" IsChecked="{Binding Controller.Range.AutoY,Mode=TwoWay}">Auto Range (Y)</CheckBox>
+
+                            <TextBlock FontSize="10" Margin="0 20 0 0">Stroke</TextBlock>
+                            <ComboBox Margin="0 5 0 0" ItemsSource="{StaticResource colors}" SelectedItem="{Binding Controller.DataSeriesCollection[0].Stroke}"/>
+
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Thickness</TextBlock>
+                            <Slider Margin="0 5 0 0" Minimum="1" Maximum="5" Value="{Binding Controller.DataSeriesCollection[0].StrokeThickness}" IsSnapToTickEnabled="True" TickFrequency="1" />
+
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Fill</TextBlock>
+                            <ComboBox Margin="0 5 0 0" ItemsSource="{StaticResource brushes}" SelectedItem="{Binding Controller.DataSeriesCollection[0].Fill}"/>
+
+                            <CheckBox Margin="0 10 0 0" IsChecked="{Binding Controller.IsPaused,Mode=TwoWay}">Paused</CheckBox>
+
+                            <Button Margin="0 10 0 0" Padding="5" Command="{Binding Controller.ClearCommand}">Clear</Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Primary Flight Display">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Viewbox Stretch="UniformToFill" Margin="4" Grid.Row="0" Grid.Column="1">
+                        <Canvas Background="Black" ClipToBounds="True" Width="{x:Static pfd:Globals.PFDHeight}" Height="{x:Static pfd:Globals.PFDHeight}">
+                            <ItemsControl ItemsSource="{Binding PFDController.PFDLayers}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Canvas>
+                    </Viewbox>
+
+                    <StackPanel Grid.Column="3" Grid.RowSpan="2">
+                        <GroupBox Margin="4" Header="Layers">
+                            <StackPanel Margin="4">
+                                <CheckBox Margin="4" Content="Sky + Ground" IsChecked="{Binding PFDController.SkyGround}"/>
+                                <CheckBox Margin="4" Content="Pitch Scale" IsChecked="{Binding PFDController.PitchScale}"/>
+                                <CheckBox Margin="4" Content="Clip Pitch" IsChecked="{Binding PFDController.PitchClip}"/>
+                                <CheckBox Margin="4" Content="Opacity Mask" IsChecked="{Binding PFDController.OpacityMask}"/>
+                                <CheckBox Margin="4" Content="Roll Scale" IsChecked="{Binding PFDController.RollScale}"/>
+                                <CheckBox Margin="4" Content="Indicator" IsChecked="{Binding PFDController.Indicator}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Margin="4" Header="Parameters">
+
+                            <Grid Margin="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" Text="Pitch"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Margin="4" Text="Roll"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Margin="4" Text="IAS"/>
+                                <TextBlock Grid.Row="6" Grid.Column="0" Margin="4" Text="Altitude"/>
+                                <TextBlock Grid.Row="8" Grid.Column="0" Margin="4" Text="Heading"/>
+
+                                <Slider Grid.Row="1" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.PitchMin}" Maximum="{x:Static pfd:Globals.PitchMax}" Value="{Binding PFDController.Pitch}" />
+                                <Slider Grid.Row="3" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.RollMin}" Maximum="{x:Static pfd:Globals.RollMax}" Value="{Binding PFDController.Roll}" />
+                                <Slider Grid.Row="5" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.AltitudeMin}" Maximum="{x:Static pfd:Globals.AltitudeMax}" Value="{Binding PFDController.Altitude}"/>
+                                <Slider Grid.Row="7" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.IASMin}" Maximum="{x:Static pfd:Globals.IASMax}" Value="{Binding PFDController.IAS}"/>
+                                <Slider Grid.Row="9" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.HeadingMin}" Maximum="{x:Static pfd:Globals.HeadingMax}" Value="{Binding PFDController.Heading}"/>
+
+                                <TextBox Grid.Row="0" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Pitch, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="2" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Roll, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="4" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Altitude, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="6" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.IAS, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="8" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Heading, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </GroupBox>
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller1}" Grid.Row="0" Grid.Column="1" />
-        <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller2}" Grid.Row="0" Grid.Column="2" />
-        <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller3}" Grid.Row="1" Grid.Column="0" />
-        <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller4}" Grid.Row="1" Grid.Column="1" />
-        <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller5}" Grid.Row="1" Grid.Column="2" />
-
-        <Border Grid.RowSpan="2" Grid.Column="3" Margin="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="5">
-            <StackPanel>
-                <TextBlock FontSize="10">Duration</TextBlock>
-                <TextBox Margin="0 5 0 0" Text="{Binding Controller.Range.MaximumX,Mode=TwoWay}"></TextBox>
-
-                <TextBlock FontSize="10" Margin="0 10 0 0">Refresh Rate</TextBlock>
-                <TextBox Margin="0 5 0 0" Text="{Binding Controller.RefreshRate,Mode=TwoWay}"></TextBox>
-
-                <TextBlock FontSize="10" Margin="0 10 0 0">Minimum Y</TextBlock>
-                <TextBox Margin="0 5 0 0" Text="{Binding Controller.Range.MinimumY,Mode=TwoWay}"></TextBox>
-
-                <TextBlock FontSize="10" Margin="0 10 0 0">Maximum Y</TextBlock>
-                <TextBox Margin="0 5 0 0" Text="{Binding Controller.Range.MaximumY,Mode=TwoWay}"></TextBox>
-
-                <CheckBox Margin="0 5 0 0" IsChecked="{Binding Controller.Range.AutoY,Mode=TwoWay}">Auto Range (Y)</CheckBox>
-
-                <TextBlock FontSize="10" Margin="0 20 0 0">Stroke</TextBlock>
-                <ComboBox Margin="0 5 0 0" ItemsSource="{StaticResource colors}" SelectedItem="{Binding Controller.DataSeriesCollection[0].Stroke}"/>
-
-                <TextBlock FontSize="10" Margin="0 10 0 0">Thickness</TextBlock>
-                <Slider Margin="0 5 0 0" Minimum="1" Maximum="5" Value="{Binding Controller.DataSeriesCollection[0].StrokeThickness}" IsSnapToTickEnabled="True" TickFrequency="1" />
-
-                <TextBlock FontSize="10" Margin="0 10 0 0">Fill</TextBlock>
-                <ComboBox Margin="0 5 0 0" ItemsSource="{StaticResource brushes}" SelectedItem="{Binding Controller.DataSeriesCollection[0].Fill}"/>
-
-                <CheckBox Margin="0 10 0 0" IsChecked="{Binding Controller.IsPaused,Mode=TwoWay}">Paused</CheckBox>
-
-                <Button Margin="0 10 0 0" Padding="5" Command="{Binding Controller.ClearCommand}">Clear</Button>
-            </StackPanel>
-        </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
 
