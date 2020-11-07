@@ -42,13 +42,15 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding Controller}" Grid.Row="0" Grid.Column="0" />
                     <ListBox ItemsSource="{Binding Controller.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}">
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
+                                        <CheckBox.Background>
+                                            <SolidColorBrush Color="{Binding Stroke}" />
+                                        </CheckBox.Background>
                                     </CheckBox>
                                 </StackPanel>
                             </DataTemplate>
@@ -101,7 +103,7 @@
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1.3*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
