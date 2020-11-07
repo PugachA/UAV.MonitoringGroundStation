@@ -27,8 +27,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller4 { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller5 { get; set; }
 
-        private SerialPort serialPort;
-
         public string PortName
         {
             get { return serialPort.PortName; }
@@ -51,6 +49,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
         }
         public ObservableCollection<int> BaudRates { get; set; }
 
+        private SerialPort serialPort;
 
         public MainWindowViewModel()
         {
