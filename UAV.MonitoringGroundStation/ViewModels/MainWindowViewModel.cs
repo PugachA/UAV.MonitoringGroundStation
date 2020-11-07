@@ -4,8 +4,12 @@ using RealTimeGraphX.DataPoints;
 using RealTimeGraphX.WPF;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +17,7 @@ using System.Windows.Media;
 
 namespace UAV.MonitoringGroundStation.ViewModels
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         public MainController PFDController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller { get; set; }
@@ -23,8 +27,38 @@ namespace UAV.MonitoringGroundStation.ViewModels
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller4 { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller5 { get; set; }
 
+        private SerialPort serialPort;
+
+        public string PortName
+        {
+            get { return serialPort.PortName; }
+            set
+            {
+                serialPort.PortName = value;
+                OnPropertyChanged(nameof(PortName));
+            }
+        }
+        public ObservableCollection<string> PortNames { get; set; }
+
+        public int BaudRate
+        {
+            get { return serialPort.BaudRate; }
+            set
+            {
+                serialPort.BaudRate = value;
+                OnPropertyChanged(nameof(BaudRate));
+            }
+        }
+        public ObservableCollection<int> BaudRates { get; set; }
+
+
         public MainWindowViewModel()
         {
+            serialPort = new SerialPort();
+            PortNames = new ObservableCollection<string>(SerialPort.GetPortNames());
+            BaudRates = new ObservableCollection<int>(new int[] { 9600, 19200, 38400, 57600, 74880, 115200});
+            BaudRate = 57600;
+
             PFDController = new MainController();
             PFDController.Draw();
 
@@ -126,6 +160,12 @@ namespace UAV.MonitoringGroundStation.ViewModels
                     Thread.Sleep(10);
                 }
             });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
