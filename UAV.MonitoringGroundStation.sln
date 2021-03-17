@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UAV.MonitoringGroundStation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrimaryFlightDisplay", "PrimaryFlightDisplay\PrimaryFlightDisplay.csproj", "{26F0DE93-09F3-401D-B418-897C696E861B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{B136DB90-E5E8-4497-A228-61204674145F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{26F0DE93-09F3-401D-B418-897C696E861B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26F0DE93-09F3-401D-B418-897C696E861B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26F0DE93-09F3-401D-B418-897C696E861B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B136DB90-E5E8-4497-A228-61204674145F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B136DB90-E5E8-4497-A228-61204674145F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B136DB90-E5E8-4497-A228-61204674145F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B136DB90-E5E8-4497-A228-61204674145F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
