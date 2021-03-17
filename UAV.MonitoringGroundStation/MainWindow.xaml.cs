@@ -1,5 +1,8 @@
-﻿using System;
+﻿using PrimaryFlightDisplay;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +28,13 @@ namespace UAV.MonitoringGroundStation
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+        }
+
+        private void ComboBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var viewModel = (MainWindowViewModel)DataContext;
+            viewModel.PortNames.Clear();
+            viewModel.PortNames.AddRange(SerialPort.GetPortNames());
         }
     }
 }

@@ -32,7 +32,9 @@ namespace UAV.MonitoringGroundStation.ViewModels
             get { return serialPort.PortName; }
             set
             {
-                serialPort.PortName = value;
+                if (value != null)
+                    serialPort.PortName = value;
+
                 OnPropertyChanged(nameof(PortName));
             }
         }
@@ -55,7 +57,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
         {
             serialPort = new SerialPort();
             PortNames = new ObservableCollection<string>(SerialPort.GetPortNames());
-            BaudRates = new ObservableCollection<int>(new int[] { 9600, 19200, 38400, 57600, 74880, 115200});
+            BaudRates = new ObservableCollection<int>(new int[] { 9600, 19200, 38400, 57600, 74880, 115200 });
             BaudRate = 57600;
 
             PFDController = new MainController();
