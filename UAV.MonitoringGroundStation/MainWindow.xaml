@@ -90,6 +90,11 @@
                             <CheckBox Margin="0 10 0 0" IsChecked="{Binding Controller.IsPaused,Mode=TwoWay}">Paused</CheckBox>
 
                             <Button Margin="0 10 0 0" Padding="5" Command="{Binding Controller.ClearCommand}">Clear</Button>
+
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Port Name</TextBlock>
+                            <ComboBox Margin="0 5 0 0" ItemsSource="{Binding PortNames}" SelectedItem="{Binding PortName}"/>
+                            <TextBlock FontSize="10" Margin="0 10 0 0">Baud Rate</TextBlock>
+                            <ComboBox Margin="0 5 0 0" ItemsSource="{Binding BaudRates}" SelectedItem="{Binding BaudRate}"/>
                         </StackPanel>
                     </Border>
                 </Grid>
@@ -103,7 +108,7 @@
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1.3*"/>
+                        <RowDefinition Height="1.1*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
