@@ -36,5 +36,13 @@ namespace UAV.MonitoringGroundStation
             viewModel.PortNames.Clear();
             viewModel.PortNames.AddRange(SerialPort.GetPortNames());
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (MainWindowViewModel)DataContext;
+            viewModel.OmegaXController.Clear();
+            viewModel.Controller1.Clear();
+            viewModel.Controller2.Clear();
+        }
     }
 }
