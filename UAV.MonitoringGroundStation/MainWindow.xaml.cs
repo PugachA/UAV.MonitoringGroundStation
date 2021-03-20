@@ -41,8 +41,11 @@ namespace UAV.MonitoringGroundStation
         {
             var viewModel = (MainWindowViewModel)DataContext;
             viewModel.OmegaXController.Clear();
-            viewModel.Controller1.Clear();
-            viewModel.Controller2.Clear();
+            viewModel.OmegaYController.Clear();
+            viewModel.OmegaZController.Clear();
+            viewModel.VelocityYController.Clear();
+            viewModel.BaroAltitudeController.Clear();
+            viewModel.Controller5.Clear();
         }
     }
 }

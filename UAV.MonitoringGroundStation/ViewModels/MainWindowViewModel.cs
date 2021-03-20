@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using UAV.MonitoringGroundStation.Models;
 
@@ -23,10 +24,10 @@ namespace UAV.MonitoringGroundStation.ViewModels
     {
         public MainController PFDController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaXController { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller1 { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller2 { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller3 { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller4 { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaYController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaZController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> VelocityYController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> BaroAltitudeController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller5 { get; set; }
 
         public string PortName
@@ -35,7 +36,12 @@ namespace UAV.MonitoringGroundStation.ViewModels
             set
             {
                 if (value != null)
+                {
+                    if (serialPort.IsOpen)
+                        serialPort.Close();
+
                     serialPort.PortName = value;
+                }
 
                 OnPropertyChanged(nameof(PortName));
             }
@@ -53,39 +59,68 @@ namespace UAV.MonitoringGroundStation.ViewModels
         }
         public ObservableCollection<int> BaudRates { get; set; }
 
+        private FlightData _flightData;
+        public FlightData FlightData
+        {
+            get => _flightData;
+            set
+            {
+                if (value is null)
+                    return;
+
+                if (value.ErsMode == 1 && _flightData.ErsMode == 0)
+                    MessageBox.Show("Attention activated ERS mode!!!");
+
+                _flightData = value;
+
+                OnPropertyChanged(nameof(FlightData));
+            }
+        }
+
         private SerialPort serialPort;
         private FlightDataExtractor flightDataExtractor;
 
         public MainWindowViewModel()
         {
+            _flightData = new FlightData();
+
             var dataMapping = (ConfigurationManager.GetSection("MappingSettings/FlightDataMappings") as System.Collections.Hashtable)
                  .Cast<System.Collections.DictionaryEntry>()
                  .ToDictionary(n => n.Key.ToString(), n => Convert.ToInt32(n.Value));
 
             flightDataExtractor = new FlightDataExtractor(dataMapping);
-            flightDataExtractor.Extract("10005;1800;175;170;1600;1500;1400;15000;110;120;50;1;15;2;13;3;10;50;1700;0");
 
             SerialPortInitialize();
             ControllersInitialize();
 
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
             Task.Factory.StartNew(() =>
             {
+                string message = null;
+                TimeSpan x;
                 while (true)
                 {
-                    var y = System.Windows.Forms.Cursor.Position.Y;
+                    try
+                    {
+                        if (!serialPort.IsOpen)
+                            serialPort.Open();
 
-                    var x = watch.Elapsed;
+                        message = serialPort.ReadLine();
 
-                    OmegaXController.PushData(x, y);
-                    Controller1.PushData(x, y);
-                    Controller2.PushData(x, y);
-                    Controller3.PushData(x, y);
-                    Controller4.PushData(x, y);
-                    Controller5.PushData(x, y);
-                    Thread.Sleep(10);
+                        FlightData = flightDataExtractor.Extract(message);
+                        x = FlightData.TimeStamp;
+
+                        OmegaXController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaXDesired, FlightData.OmegaXCurrent });
+                        OmegaYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaYDesired, FlightData.OmegaYCurrent });
+                        OmegaZController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaZDesired, FlightData.OmegaZCurrent });
+                        VelocityYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.VelocityYDesired, FlightData.VelocityYCurrent });
+                        BaroAltitudeController.PushData(x, FlightData.BaroAltitudeCurrent);
+                        // Controller5.PushData(x, y);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        Thread.Sleep(10);
+                    }
                 }
             });
         }
@@ -110,69 +145,79 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
             OmegaXController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series",
-                Stroke = Colors.DodgerBlue,
+                Name = "OmegaX Desired",
+                Stroke = Colors.Green,
+                StrokeThickness = 4
             });
-
             OmegaXController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series 2",
-                Stroke = Colors.Red,
+                Name = "OmegaX Current",
+                Stroke = Colors.Red
             });
 
-            Controller1 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller1.Range.MaximumX = TimeSpan.FromSeconds(10);
-            Controller1.Range.AutoY = true;
-            Controller1.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+            OmegaYController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            OmegaYController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            OmegaYController.Range.AutoY = true;
+            OmegaYController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            Controller1.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            OmegaYController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series",
-                Stroke = Colors.DodgerBlue,
+                Name = "OmegaY Desired",
+                Stroke = Colors.Green,
+                StrokeThickness = 4
+            });
+            OmegaYController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
+                Name = "OmegaY Current",
+                Stroke = Colors.Red
             });
 
-            Controller2 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller2.Range.MinimumY = 0;
-            Controller2.Range.MaximumY = 1080;
-            Controller2.Range.MaximumX = TimeSpan.FromSeconds(10);
-            Controller2.Range.AutoY = true;
-            Controller2.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+            OmegaZController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            OmegaZController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            OmegaZController.Range.AutoY = true;
+            OmegaZController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            Controller2.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            OmegaZController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series",
-                Stroke = Colors.DodgerBlue,
+                Name = "OmegaZ Desired",
+                Stroke = Colors.Green,
+                StrokeThickness = 4
+            });
+            OmegaZController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
+                Name = "OmegaZ Current",
+                Stroke = Colors.Red
             });
 
-            Controller3 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller3.Range.MinimumY = 0;
-            Controller3.Range.MaximumY = 1080;
-            Controller3.Range.MaximumX = TimeSpan.FromSeconds(10);
-            Controller3.Range.AutoY = true;
-            Controller3.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+            VelocityYController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            VelocityYController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            VelocityYController.Range.AutoY = true;
+            VelocityYController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            Controller3.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            VelocityYController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series",
-                Stroke = Colors.DodgerBlue,
+                Name = "VelocityY Desired",
+                Stroke = Colors.Green,
+                StrokeThickness = 4
+            });
+            VelocityYController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
+                Name = "VelocityY Current",
+                Stroke = Colors.Red
             });
 
-            Controller4 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller4.Range.MinimumY = 0;
-            Controller4.Range.MaximumY = 1080;
-            Controller4.Range.MaximumX = TimeSpan.FromSeconds(10);
-            Controller4.Range.AutoY = true;
-            Controller4.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+            BaroAltitudeController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            BaroAltitudeController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            BaroAltitudeController.Range.AutoY = true;
+            BaroAltitudeController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            Controller4.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            BaroAltitudeController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "Series",
-                Stroke = Colors.DodgerBlue,
+                Name = "Baro Altitude",
+                Stroke = Colors.Red
             });
 
             Controller5 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller5.Range.MinimumY = 0;
-            Controller5.Range.MaximumY = 1080;
             Controller5.Range.MaximumX = TimeSpan.FromSeconds(10);
             Controller5.Range.AutoY = true;
             Controller5.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;

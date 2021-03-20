@@ -50,7 +50,7 @@ namespace UAV.MonitoringGroundStation.Models
 
             var velocityYCurrent = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYCurrent)]]);
             var velocityYDesired = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYDesired)]]);
-            var velocityYKp= 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYKp)]]);
+            var velocityYKp = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYKp)]]);
 
             var beta = int.Parse(splittedData[_dataMapping[nameof(FlightData.Beta)]]);
 
@@ -83,10 +83,29 @@ namespace UAV.MonitoringGroundStation.Models
                 BaroAltitudeCurrent = baroAltitudeCurrent,
                 Beta = beta,
                 ModePwm = modePwm,
+                Mode = GetModeName(modePwm),
                 ErsMode = ersMode
             };
 
             return fligthData;
+        }
+
+        private string GetModeName(int modePwm)
+        {
+            switch (modePwm)
+            {
+                case int pwm when pwm < 1000: return "DARM";
+                case int pwm when pwm >= 1000 && pwm < 1100: return "DIRECT";
+                case int pwm when pwm >= 1100 && pwm < 1300: return "OMEGA_STAB";
+                case int pwm when pwm >= 1300 && pwm < 1400: return "OMEGA_STAB K_TUNE";
+                case int pwm when pwm >= 1400 && pwm < 1500: return "OMEGA_STAB";
+                case int pwm when pwm >= 1500 && pwm < 1700: return "OMEGA_STAB I_TUNE";
+                case int pwm when pwm >= 1700 && pwm < 1800: return "VY_STAB";
+                case int pwm when pwm >= 1800 && pwm < 1900: return "VY_STAB K_TUNE";
+                case int pwm when pwm >= 1900 && pwm < 1950: return "DIRECT FLAPS";
+                case int pwm when pwm > 2000: return "ERS";
+                default: return "UNKNOWN MODE";
+            }
         }
     }
 }

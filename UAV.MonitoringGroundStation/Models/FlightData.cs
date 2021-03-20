@@ -27,6 +27,7 @@ namespace UAV.MonitoringGroundStation.Models
         public double OmegaZKi { get; set; }
         public double VelocityYKp { get; set; }
         public int ModePwm { get; set; }
+        public string Mode { get; set; }
         public int ErsMode { get; set; }
     }
 }
