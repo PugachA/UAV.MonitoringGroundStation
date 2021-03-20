@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
@@ -14,13 +15,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using UAV.MonitoringGroundStation.Models;
 
 namespace UAV.MonitoringGroundStation.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         public MainController PFDController { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaXController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller1 { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller2 { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> Controller3 { get; set; }
@@ -52,33 +54,73 @@ namespace UAV.MonitoringGroundStation.ViewModels
         public ObservableCollection<int> BaudRates { get; set; }
 
         private SerialPort serialPort;
+        private FlightDataExtractor flightDataExtractor;
 
         public MainWindowViewModel()
+        {
+            var dataMapping = (ConfigurationManager.GetSection("MappingSettings/FlightDataMappings") as System.Collections.Hashtable)
+                 .Cast<System.Collections.DictionaryEntry>()
+                 .ToDictionary(n => n.Key.ToString(), n => Convert.ToInt32(n.Value));
+
+            flightDataExtractor = new FlightDataExtractor(dataMapping);
+            flightDataExtractor.Extract("10005;1800;175;170;1600;1500;1400;15000;110;120;50;1;15;2;13;3;10;50;1700;0");
+
+            SerialPortInitialize();
+            ControllersInitialize();
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    var y = System.Windows.Forms.Cursor.Position.Y;
+
+                    var x = watch.Elapsed;
+
+                    OmegaXController.PushData(x, y);
+                    Controller1.PushData(x, y);
+                    Controller2.PushData(x, y);
+                    Controller3.PushData(x, y);
+                    Controller4.PushData(x, y);
+                    Controller5.PushData(x, y);
+                    Thread.Sleep(10);
+                }
+            });
+        }
+
+        private void SerialPortInitialize()
         {
             serialPort = new SerialPort();
             PortNames = new ObservableCollection<string>(SerialPort.GetPortNames());
             BaudRates = new ObservableCollection<int>(new int[] { 9600, 19200, 38400, 57600, 74880, 115200 });
             BaudRate = 57600;
+        }
 
+        private void ControllersInitialize()
+        {
             PFDController = new MainController();
             PFDController.Draw();
 
-            Controller = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller.Range.MinimumY = 0;
-            Controller.Range.MaximumY = 1080;
-            Controller.Range.MaximumX = TimeSpan.FromSeconds(10);
-            Controller.Range.AutoY = true;
-            Controller.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+            OmegaXController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            OmegaXController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            OmegaXController.Range.AutoY = true;
+            OmegaXController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            Controller.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            OmegaXController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "Series",
                 Stroke = Colors.DodgerBlue,
             });
 
+            OmegaXController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
+                Name = "Series 2",
+                Stroke = Colors.Red,
+            });
+
             Controller1 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            Controller1.Range.MinimumY = 0;
-            Controller1.Range.MaximumY = 1080;
             Controller1.Range.MaximumX = TimeSpan.FromSeconds(10);
             Controller1.Range.AutoY = true;
             Controller1.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
@@ -141,26 +183,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 Stroke = Colors.DodgerBlue,
             });
 
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    var y = System.Windows.Forms.Cursor.Position.Y;
-
-                    var x = watch.Elapsed;
-
-                    Controller.PushData(x, y);
-                    Controller1.PushData(x, y);
-                    Controller2.PushData(x, y);
-                    Controller3.PushData(x, y);
-                    Controller4.PushData(x, y);
-                    Controller5.PushData(x, y);
-                    Thread.Sleep(10);
-                }
-            });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

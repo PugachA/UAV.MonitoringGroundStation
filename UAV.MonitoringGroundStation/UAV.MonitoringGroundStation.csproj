@@ -57,6 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ControlledData.cs" />
+    <Compile Include="Models\FlightData.cs" />
+    <Compile Include="Models\FlightDataExtractor.cs" />
+    <Compile Include="Models\FlightDataMapping.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="WpfGraphControl.cs" />
     <Page Include="MainWindow.xaml">
@@ -103,7 +107,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <PackageReference Include="System.Configuration.ConfigurationManager">
+      <Version>5.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PrimaryFlightDisplay\PrimaryFlightDisplay.csproj">
