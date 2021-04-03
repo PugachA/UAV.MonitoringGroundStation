@@ -52,7 +52,11 @@ namespace UAV.MonitoringGroundStation.Models
             var velocityYDesired = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYDesired)]]);
             var velocityYKp = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYKp)]]);
 
-            var beta = int.Parse(splittedData[_dataMapping[nameof(FlightData.Beta)]]);
+            var nz = int.Parse(splittedData[_dataMapping[nameof(FlightData.Nz)]]);
+
+            var pitch = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Pitch)]]);
+            var roll = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Roll)]]);
+            var yaw = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Yaw)]]);
 
             var modePwm = int.Parse(splittedData[_dataMapping[nameof(FlightData.ModePwm)]]);
             var ersMode = int.Parse(splittedData[_dataMapping[nameof(FlightData.ErsMode)]]);
@@ -81,7 +85,12 @@ namespace UAV.MonitoringGroundStation.Models
                 VelocityYKp = velocityYKp,
 
                 BaroAltitudeCurrent = baroAltitudeCurrent,
-                Beta = beta,
+                Nz = nz,
+
+                Pitch = pitch,
+                Roll = roll,
+                Yaw = yaw,
+
                 ModePwm = modePwm,
                 Mode = GetModeName(modePwm),
                 ErsMode = ersMode
