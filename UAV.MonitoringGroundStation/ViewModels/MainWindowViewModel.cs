@@ -153,12 +153,13 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "OmegaX Desired",
                 Stroke = Colors.Green,
-                StrokeThickness = 4
+                StrokeThickness = 3
             });
             OmegaXController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "OmegaX Current",
-                Stroke = Colors.Red
+                Stroke = Colors.Red,
+                StrokeThickness = 3
             });
 
             OmegaYController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -170,12 +171,13 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "OmegaY Desired",
                 Stroke = Colors.Green,
-                StrokeThickness = 4
+                StrokeThickness = 3
             });
             OmegaYController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "OmegaY Current",
-                Stroke = Colors.Red
+                Stroke = Colors.Red,
+                StrokeThickness = 3
             });
 
             OmegaZController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -187,12 +189,13 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "OmegaZ Desired",
                 Stroke = Colors.Green,
-                StrokeThickness = 4
+                StrokeThickness = 3
             });
             OmegaZController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "OmegaZ Current",
-                Stroke = Colors.Red
+                Stroke = Colors.Red,
+                StrokeThickness = 3
             });
 
             VelocityYController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -204,12 +207,13 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "VelocityY Desired",
                 Stroke = Colors.Green,
-                StrokeThickness = 4
+                StrokeThickness = 3
             });
             VelocityYController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "VelocityY Current",
-                Stroke = Colors.Red
+                Stroke = Colors.Red,
+                StrokeThickness = 3
             });
 
             BaroAltitudeController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -220,7 +224,8 @@ namespace UAV.MonitoringGroundStation.ViewModels
             BaroAltitudeController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "Baro Altitude",
-                Stroke = Colors.Red
+                Stroke = Colors.Red,
+                StrokeThickness = 3
             });
 
             Controller5 = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -232,6 +237,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "Series",
                 Stroke = Colors.DodgerBlue,
+                StrokeThickness = 3
             });
 
         }
