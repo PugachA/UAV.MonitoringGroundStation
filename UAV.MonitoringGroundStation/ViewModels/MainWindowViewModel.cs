@@ -16,6 +16,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 using UAV.MonitoringGroundStation.Models;
 
 namespace UAV.MonitoringGroundStation.ViewModels
@@ -68,9 +69,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 if (value is null)
                     return;
 
-                if (value.ErsMode == 1 && _flightData.ErsMode == 0)
-                    MessageBox.Show("Attention activated ERS mode!!!");
-
                 _flightData = value;
 
                 OnPropertyChanged(nameof(FlightData));
@@ -97,6 +95,8 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 string message = null;
                 TimeSpan x;
+                var player = new MediaPlayer();
+                var flightData = new FlightData();
                 while (true)
                 {
                     try
@@ -105,8 +105,14 @@ namespace UAV.MonitoringGroundStation.ViewModels
                             serialPort.Open();
 
                         message = serialPort.ReadLine();
+                        //message = "604630;0;1;0;1;-23;1;479;-1;-39;-124;0;0;0;0;40;600;60;1940;0";
 
-                        FlightData = flightDataExtractor.Extract(message);
+                        flightData = flightDataExtractor.Extract(message);
+
+                        if(flightData.Mode != FlightData.Mode)
+                            SoundMode(player, flightData.Mode);
+
+                        FlightData = flightData;
                         x = FlightData.TimeStamp;
 
                         OmegaXController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaXDesired, FlightData.OmegaXCurrent });
@@ -228,6 +234,22 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 Stroke = Colors.DodgerBlue,
             });
 
+        }
+
+        private void SoundMode(MediaPlayer player, string mode)
+        {
+            string parseMode = mode;
+            if (string.IsNullOrEmpty(mode))
+                parseMode = "UNKNOWN MODE";
+
+            if (mode == "OMEGA_STAB K_TUNE" || mode == "OMEGA_STAB I_TUNE")
+                parseMode = "OMEGA_STAB";
+
+            if (mode == "VY_STAB K_TUNE")
+                parseMode = "VY_STAB";
+
+            player.Open(new Uri($"Sounds\\{parseMode}.mp3", UriKind.Relative));
+            player.Play();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
