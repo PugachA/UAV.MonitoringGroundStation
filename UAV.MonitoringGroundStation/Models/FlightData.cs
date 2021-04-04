@@ -18,7 +18,7 @@ namespace UAV.MonitoringGroundStation.Models
         public double BaroAltitudeCurrent { get; set; }
         public double VelocityYCurrent { get; set; }
         public double VelocityYDesired { get; set; }
-        public double Nz { get; set; }
+        public double AirSpeed { get; set; }
         public double OmegaXKp { get; set; }
         public double OmegaXKi { get; set; }
         public double OmegaYKp { get; set; }
@@ -29,6 +29,7 @@ namespace UAV.MonitoringGroundStation.Models
         public double Pitch { get; set; }
         public double Roll { get; set; }
         public double Yaw { get; set; }
+        public double Nz { get; set; }
         public int ModePwm { get; set; }
         public string Mode { get; set; }
         public int ErsMode { get; set; }

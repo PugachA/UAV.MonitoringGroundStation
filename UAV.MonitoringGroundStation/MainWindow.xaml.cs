@@ -45,7 +45,7 @@ namespace UAV.MonitoringGroundStation
             viewModel.OmegaZController.Clear();
             viewModel.VelocityYController.Clear();
             viewModel.BaroAltitudeController.Clear();
-            viewModel.NzController.Clear();
+            viewModel.AirSpeedController.Clear();
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
@@ -54,6 +54,7 @@ namespace UAV.MonitoringGroundStation
             viewModel.PitchController.Clear();
             viewModel.RollController.Clear();
             viewModel.YawController.Clear();
+            viewModel.NzController.Clear();
         }
     }
 }

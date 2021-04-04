@@ -149,10 +149,10 @@
                     </ListBox>
 
                     <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
-                        <TextBlock Text="nz" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
+                        <TextBlock Text="AirSpeed" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
                     </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding NzController}" Grid.Row="3" Grid.Column="2" />
-                    <ListBox ItemsSource="{Binding NzController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2" >
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding AirSpeedController}" Grid.Row="3" Grid.Column="2" />
+                    <ListBox ItemsSource="{Binding AirSpeedController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="2" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -244,6 +244,24 @@
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding YawController}" Grid.Row="1" Grid.Column="2" />
                     <ListBox ItemsSource="{Binding YawController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
+                                        <CheckBox.Background>
+                                            <SolidColorBrush Color="{Binding Stroke}" />
+                                        </CheckBox.Background>
+                                    </CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="nz" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
+                    </StackPanel>
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding NzController}" Grid.Row="3" Grid.Column="0" />
+                    <ListBox ItemsSource="{Binding NzController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

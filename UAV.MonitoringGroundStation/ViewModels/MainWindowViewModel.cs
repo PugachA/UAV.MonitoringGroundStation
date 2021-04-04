@@ -24,11 +24,12 @@ namespace UAV.MonitoringGroundStation.ViewModels
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaZController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> VelocityYController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> BaroAltitudeController { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> NzController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> AirSpeedController { get; set; }
 
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> PitchController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> RollController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> YawController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> NzController { get; set; }
 
         public string PortName
         {
@@ -119,11 +120,12 @@ namespace UAV.MonitoringGroundStation.ViewModels
                         OmegaZController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaZDesired, FlightData.OmegaZCurrent });
                         VelocityYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.VelocityYDesired, FlightData.VelocityYCurrent });
                         BaroAltitudeController.PushData(x, FlightData.BaroAltitudeCurrent);
-                        NzController.PushData(x, FlightData.Nz);
+                        AirSpeedController.PushData(x, FlightData.AirSpeed);
                         
                         PitchController.PushData(x, FlightData.Pitch);
                         RollController.PushData(x, FlightData.Roll);
                         YawController.PushData(x, FlightData.Yaw);
+                        NzController.PushData(x, FlightData.Nz);
                     }
                     catch (Exception ex)
                     {
@@ -147,6 +149,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             PFDController = new MainController();
             PFDController.Draw();
 
+            var strokeThickness = 2;
             OmegaXController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
             OmegaXController.Range.MaximumX = TimeSpan.FromSeconds(10);
             OmegaXController.Range.AutoY = true;
@@ -162,7 +165,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "OmegaX Current",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             OmegaYController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -180,7 +183,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "OmegaY Current",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             OmegaZController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -198,7 +201,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "OmegaZ Current",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             VelocityYController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -216,7 +219,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "VelocityY Current",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             BaroAltitudeController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -228,19 +231,19 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "Baro Altitude",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
-            NzController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            NzController.Range.MaximumX = TimeSpan.FromSeconds(10);
-            NzController.Range.AutoY = true;
-            NzController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+            AirSpeedController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            AirSpeedController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            AirSpeedController.Range.AutoY = true;
+            AirSpeedController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
 
-            NzController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            AirSpeedController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "nz",
+                Name = "AirSpeed",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             PitchController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -252,7 +255,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "Pitch",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             RollController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -264,7 +267,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "Roll",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
             });
 
             YawController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
@@ -276,7 +279,19 @@ namespace UAV.MonitoringGroundStation.ViewModels
             {
                 Name = "Yaw",
                 Stroke = Colors.Red,
-                StrokeThickness = 3
+                StrokeThickness = strokeThickness
+            });
+
+            NzController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            NzController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            NzController.Range.AutoY = true;
+            NzController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+
+            NzController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
+                Name = "nz",
+                Stroke = Colors.Red,
+                StrokeThickness = strokeThickness
             });
         }
 
