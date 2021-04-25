@@ -48,8 +48,10 @@
                         <TextBlock Text="OmegaX" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
                         <TextBlock Text="Kp=" FontSize="14" Margin="30 0 0 3" />
                         <TextBlock Text="{Binding FlightData.OmegaXKp}" FontSize="14" />
-                        <TextBlock Text="Ki=" FontSize="14" Margin="10 0 0 0" />
+                        <TextBlock Text="Ki=" FontSize="14" Margin="10 0 0 3" />
                         <TextBlock Text="{Binding FlightData.OmegaXKi}" FontSize="14" />
+                        <TextBlock Text="Desired=" FontSize="14" Margin="10 0 0 0" />
+                        <TextBlock Text="{Binding FlightData.OmegaXDesired}" FontSize="14" />
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding OmegaXController}" Grid.Row="1" Grid.Column="0" />
                     <ListBox ItemsSource="{Binding OmegaXController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" >
@@ -72,6 +74,8 @@
                         <TextBlock Text="{Binding FlightData.OmegaYKp}" FontSize="14" />
                         <TextBlock Text="Ki=" FontSize="14" Margin="10 0 0 0" />
                         <TextBlock Text="{Binding FlightData.OmegaYKi}" FontSize="14" />
+                        <TextBlock Text="Desired=" FontSize="14" Margin="10 0 0 0" />
+                        <TextBlock Text="{Binding FlightData.OmegaYDesired}" FontSize="14" />
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding OmegaYController}" Grid.Row="1" Grid.Column="1" />
                     <ListBox ItemsSource="{Binding OmegaYController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" >
@@ -94,6 +98,8 @@
                         <TextBlock Text="{Binding FlightData.OmegaZKp}" FontSize="14" />
                         <TextBlock Text="Ki=" FontSize="14" Margin="10 0 0 0" />
                         <TextBlock Text="{Binding FlightData.OmegaZKi}" FontSize="14" />
+                        <TextBlock Text="Desired=" FontSize="14" Margin="10 0 0 0" />
+                        <TextBlock Text="{Binding FlightData.OmegaZDesired}" FontSize="14" />
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding OmegaZController}" Grid.Row="1" Grid.Column="2" />
                     <ListBox ItemsSource="{Binding OmegaZController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" >
@@ -114,6 +120,8 @@
                         <TextBlock Text="VelocityY" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
                         <TextBlock Text="Kp=" FontSize="14" Margin="30 0 0 3" />
                         <TextBlock Text="{Binding FlightData.VelocityYKp}" FontSize="14" />
+                        <TextBlock Text="Desired=" FontSize="14" Margin="10 0 0 0" />
+                        <TextBlock Text="{Binding FlightData.VelocityYDesired}" FontSize="14" />
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding VelocityYController}" Grid.Row="3" Grid.Column="0" />
                     <ListBox ItemsSource="{Binding VelocityYController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" >
