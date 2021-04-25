@@ -25,6 +25,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> VelocityYController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> BaroAltitudeController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> AirSpeedController { get; set; }
+        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaTurnController { get; set; }
 
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> PitchController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> RollController { get; set; }
@@ -120,12 +121,13 @@ namespace UAV.MonitoringGroundStation.ViewModels
                         OmegaZController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaZDesired, FlightData.OmegaZCurrent });
                         VelocityYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.VelocityYDesired, FlightData.VelocityYCurrent });
                         BaroAltitudeController.PushData(x, FlightData.BaroAltitudeCurrent);
-                        AirSpeedController.PushData(x, FlightData.AirSpeed);
-                        
+                        OmegaTurnController.PushData(x, FlightData.OmegaTurn);
+
                         PitchController.PushData(x, FlightData.Pitch);
-                        RollController.PushData(x, FlightData.Roll);
+                        RollController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.RollDesired, FlightData.Roll });
                         YawController.PushData(x, FlightData.Yaw);
                         NzController.PushData(x, FlightData.Nz);
+                        AirSpeedController.PushData(x, FlightData.AirSpeed);
                     }
                     catch (Exception ex)
                     {
@@ -234,6 +236,18 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 StrokeThickness = strokeThickness
             });
 
+            OmegaTurnController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
+            OmegaTurnController.Range.MaximumX = TimeSpan.FromSeconds(10);
+            OmegaTurnController.Range.AutoY = true;
+            OmegaTurnController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
+
+            OmegaTurnController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
+                Name = "OmegaTurn",
+                Stroke = Colors.Red,
+                StrokeThickness = strokeThickness
+            });
+
             AirSpeedController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
             AirSpeedController.Range.MaximumX = TimeSpan.FromSeconds(10);
             AirSpeedController.Range.AutoY = true;
@@ -265,10 +279,17 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
             RollController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
+                Name = "Roll Desired",
+                Stroke = Colors.Green,
+                StrokeThickness = 3
+            });
+            RollController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
                 Name = "Roll",
                 Stroke = Colors.Red,
                 StrokeThickness = strokeThickness
             });
+            
 
             YawController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
             YawController.Range.MaximumX = TimeSpan.FromSeconds(10);
@@ -305,7 +326,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 parseMode = "OMEGA_STAB";
 
             if (mode == "VY_STAB K_TUNE")
-                parseMode = "VY_STAB";
+                parseMode = "COMMAND";
 
             player.Open(new Uri($"Sounds\\{parseMode}.mp3", UriKind.Relative));
             player.Play();

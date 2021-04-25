@@ -56,8 +56,10 @@ namespace UAV.MonitoringGroundStation.Models
 
             var pitch = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Pitch)]]);
             var roll = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Roll)]]);
+            var rollDesired = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.RollDesired)]]);
             var yaw = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Yaw)]]);
             var nz = 0.001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Nz)]]);
+            var omegaTurn = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaTurn)]]);
 
             var modePwm = int.Parse(splittedData[_dataMapping[nameof(FlightData.ModePwm)]]);
             var ersMode = int.Parse(splittedData[_dataMapping[nameof(FlightData.ErsMode)]]);
@@ -90,8 +92,10 @@ namespace UAV.MonitoringGroundStation.Models
 
                 Pitch = pitch,
                 Roll = roll,
+                RollDesired = rollDesired,
                 Yaw = yaw,
                 Nz = nz,
+                OmegaTurn = omegaTurn,
 
                 ModePwm = modePwm,
                 Mode = GetModeName(modePwm),
@@ -111,7 +115,7 @@ namespace UAV.MonitoringGroundStation.Models
                 case int pwm when pwm >= 1300 && pwm < 1400: return "OMEGA_STAB K_TUNE";
                 case int pwm when pwm >= 1400 && pwm < 1500: return "OMEGA_STAB";
                 case int pwm when pwm >= 1500 && pwm < 1700: return "OMEGA_STAB I_TUNE";
-                case int pwm when pwm >= 1700 && pwm < 1800: return "VY_STAB";
+                case int pwm when pwm >= 1700 && pwm < 1800: return "COMMAND";
                 case int pwm when pwm >= 1800 && pwm < 1900: return "VY_STAB K_TUNE";
                 case int pwm when pwm >= 1900 && pwm < 1950: return "DIRECT FLAPS";
                 case int pwm when pwm > 2000: return "ERS";

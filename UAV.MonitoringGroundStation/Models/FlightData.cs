@@ -30,6 +30,8 @@ namespace UAV.MonitoringGroundStation.Models
         public double Roll { get; set; }
         public double Yaw { get; set; }
         public double Nz { get; set; }
+        public double OmegaTurn { get; set; }
+        public double RollDesired { get; set; }
         public int ModePwm { get; set; }
         public string Mode { get; set; }
         public int ErsMode { get; set; }
