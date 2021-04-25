@@ -62,6 +62,7 @@ namespace UAV.MonitoringGroundStation.Models
             var omegaTurn = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaTurn)]]);
 
             var modePwm = int.Parse(splittedData[_dataMapping[nameof(FlightData.ModePwm)]]);
+            var batteryVoltage = 0.001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.BatteryVoltage)]]);
             var ersMode = int.Parse(splittedData[_dataMapping[nameof(FlightData.ErsMode)]]);
 
             var fligthData = new FlightData
@@ -99,6 +100,7 @@ namespace UAV.MonitoringGroundStation.Models
 
                 ModePwm = modePwm,
                 Mode = GetModeName(modePwm),
+                BatteryVoltage = batteryVoltage,
                 ErsMode = ersMode
             };
 

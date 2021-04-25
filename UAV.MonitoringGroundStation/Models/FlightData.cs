@@ -32,9 +32,13 @@ namespace UAV.MonitoringGroundStation.Models
         public double Nz { get; set; }
         public double OmegaTurn { get; set; }
         public double RollDesired { get; set; }
+        //public double Latitude { get; set; }
+        //public double Longitude { get; set; }
+        //public double GpsSpeed { get; set; }
+        //public double GpsCourse { get; set; }
         public int ModePwm { get; set; }
         public string Mode { get; set; }
+        public double BatteryVoltage { get; set; }
         public int ErsMode { get; set; }
-
     }
 }
