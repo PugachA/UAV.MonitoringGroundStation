@@ -56,10 +56,10 @@ namespace UAV.MonitoringGroundStation.Models
 
             var pitch = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Pitch)]]);
             var roll = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Roll)]]);
-            //var rollDesired = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.RollDesired)]]);
+            var rollDesired = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.RollDesired)]]);
             var yaw = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Yaw)]]);
             var nz = 0.001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Nz)]]);
-            //var omegaTurn = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaTurn)]]);
+            var omegaTurn = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaTurn)]]);
 
             var latitude = 0.000001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Latitude)]]);
             var longitude = 0.000001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Longitude)]]);
@@ -99,10 +99,10 @@ namespace UAV.MonitoringGroundStation.Models
 
                 Pitch = pitch,
                 Roll = roll,
-                //RollDesired = rollDesired,
+                RollDesired = rollDesired,
                 Yaw = yaw,
                 Nz = nz,
-                //OmegaTurn = omegaTurn,
+                OmegaTurn = omegaTurn,
 
                 Latitude = latitude,
                 Longitude = longitude,
