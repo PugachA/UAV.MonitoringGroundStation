@@ -30,12 +30,13 @@ namespace UAV.MonitoringGroundStation.Models
         public double Roll { get; set; }
         public double Yaw { get; set; }
         public double Nz { get; set; }
-        public double OmegaTurn { get; set; }
-        public double RollDesired { get; set; }
-        //public double Latitude { get; set; }
-        //public double Longitude { get; set; }
-        //public double GpsSpeed { get; set; }
-        //public double GpsCourse { get; set; }
+        //public double OmegaTurn { get; set; }
+        //public double RollDesired { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double GpsSpeed { get; set; }
+        public double GpsCourse { get; set; }
+        public int GpsValid { get; set; }
         public int ModePwm { get; set; }
         public string Mode { get; set; }
         public double BatteryVoltage { get; set; }

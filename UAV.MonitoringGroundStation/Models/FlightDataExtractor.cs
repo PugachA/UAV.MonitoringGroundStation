@@ -56,10 +56,16 @@ namespace UAV.MonitoringGroundStation.Models
 
             var pitch = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Pitch)]]);
             var roll = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Roll)]]);
-            var rollDesired = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.RollDesired)]]);
+            //var rollDesired = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.RollDesired)]]);
             var yaw = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Yaw)]]);
             var nz = 0.001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Nz)]]);
-            var omegaTurn = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaTurn)]]);
+            //var omegaTurn = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaTurn)]]);
+
+            var latitude = 0.000001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Latitude)]]);
+            var longitude = 0.000001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.Longitude)]]);
+            var gpsSpeed = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.GpsSpeed)]]);
+            var gpsCourse = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.GpsCourse)]]);
+            var gpsValid = int.Parse(splittedData[_dataMapping[nameof(FlightData.GpsValid)]]);
 
             var modePwm = int.Parse(splittedData[_dataMapping[nameof(FlightData.ModePwm)]]);
             var batteryVoltage = 0.001 * int.Parse(splittedData[_dataMapping[nameof(FlightData.BatteryVoltage)]]);
@@ -93,10 +99,16 @@ namespace UAV.MonitoringGroundStation.Models
 
                 Pitch = pitch,
                 Roll = roll,
-                RollDesired = rollDesired,
+                //RollDesired = rollDesired,
                 Yaw = yaw,
                 Nz = nz,
-                OmegaTurn = omegaTurn,
+                //OmegaTurn = omegaTurn,
+
+                Latitude = latitude,
+                Longitude = longitude,
+                GpsSpeed = gpsSpeed,
+                GpsCourse = gpsCourse,
+                GpsValid = gpsValid,
 
                 ModePwm = modePwm,
                 Mode = GetModeName(modePwm),

@@ -121,13 +121,13 @@ namespace UAV.MonitoringGroundStation.ViewModels
                         OmegaZController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaZDesired, FlightData.OmegaZCurrent });
                         VelocityYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.VelocityYDesired, FlightData.VelocityYCurrent });
                         BaroAltitudeController.PushData(x, FlightData.BaroAltitudeCurrent);
-                        OmegaTurnController.PushData(x, FlightData.OmegaTurn);
+                        //OmegaTurnController.PushData(x, FlightData.OmegaTurn);
 
                         PitchController.PushData(x, FlightData.Pitch);
-                        RollController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.RollDesired, FlightData.Roll });
+                        //RollController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.RollDesired, FlightData.Roll });
                         YawController.PushData(x, FlightData.Yaw);
                         NzController.PushData(x, FlightData.Nz);
-                        AirSpeedController.PushData(x, FlightData.AirSpeed);
+                        AirSpeedController.PushData(x, FlightData.GpsSpeed);
                     }
                     catch (Exception ex)
                     {
