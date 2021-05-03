@@ -223,160 +223,6 @@
                     </Border>
                 </Grid>
             </TabItem>
-            <TabItem Header="Flight Data Angles">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="200"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock Text="Pitch" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
-                    </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding PitchController}" Grid.Row="1" Grid.Column="0" />
-                    <ListBox ItemsSource="{Binding PitchController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
-                                        <CheckBox.Background>
-                                            <SolidColorBrush Color="{Binding Stroke}" />
-                                        </CheckBox.Background>
-                                    </CheckBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock Text="Roll" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
-                    </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding RollController}" Grid.Row="1" Grid.Column="1" />
-                    <ListBox ItemsSource="{Binding RollController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
-                                        <CheckBox.Background>
-                                            <SolidColorBrush Color="{Binding Stroke}" />
-                                        </CheckBox.Background>
-                                    </CheckBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center">
-                        <TextBlock Text="Yaw" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
-                    </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding YawController}" Grid.Row="1" Grid.Column="2" />
-                    <ListBox ItemsSource="{Binding YawController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
-                                        <CheckBox.Background>
-                                            <SolidColorBrush Color="{Binding Stroke}" />
-                                        </CheckBox.Background>
-                                    </CheckBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
-                        <TextBlock Text="nz" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
-                    </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding NzController}" Grid.Row="3" Grid.Column="0" />
-                    <ListBox ItemsSource="{Binding NzController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
-                                        <CheckBox.Background>
-                                            <SolidColorBrush Color="{Binding Stroke}" />
-                                        </CheckBox.Background>
-                                    </CheckBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock Text="GpsSpeed" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
-                    </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding AirSpeedController}" Grid.Row="3" Grid.Column="1" />
-                    <ListBox ItemsSource="{Binding AirSpeedController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
-                                        <CheckBox.Background>
-                                            <SolidColorBrush Color="{Binding Stroke}" />
-                                        </CheckBox.Background>
-                                    </CheckBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <Border Grid.RowSpan="4" Grid.Column="3" Margin="10" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="5">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="Mode:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.Mode}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="ERS:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.ErsMode}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="Battery Voltage:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.BatteryVoltage}" FontSize="14" Margin="0 10 0 0" />
-                                <TextBlock Text ="V" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="GpsValid:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.GpsValid}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="Latitude:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.Latitude}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="Longitude:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.Longitude}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="GpsSpeed:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.GpsSpeed}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text ="GpsCourse:" FontSize="14" Margin="0 10 10 0" />
-                                <TextBlock Text ="{Binding FlightData.GpsCourse}" FontSize="14" Margin="0 10 0 0" />
-                            </StackPanel>
-
-                            <Button Margin="0 10 0 0" Padding="5" Click="Button2_Click">Clear</Button>
-
-                            <TextBlock FontSize="10" Margin="0 10 0 0">Port Name</TextBlock>
-                            <ComboBox Margin="0 5 0 0" ItemsSource="{Binding PortNames}" SelectedItem="{Binding PortName}"  PreviewMouseLeftButtonDown="ComboBox_PreviewMouseLeftButtonDown"/>
-                            <TextBlock FontSize="10" Margin="0 10 0 0">Baud Rate</TextBlock>
-                            <ComboBox Margin="0 5 0 0" ItemsSource="{Binding BaudRates}" SelectedItem="{Binding BaudRate}"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-            </TabItem>
             <TabItem Header="Primary Flight Display">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -387,6 +233,7 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1.1*"/>
+                        <RowDefinition Height="25" />
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -402,8 +249,91 @@
                         </Canvas>
                     </Viewbox>
 
-                    <StackPanel Grid.Column="3" Grid.RowSpan="2">
-                        <GroupBox Margin="4" Header="Layers">
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="GpsSpeed" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
+                    </StackPanel>
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding AirSpeedController}" Grid.Row="2" Grid.Column="1" />
+                    <ListBox ItemsSource="{Binding AirSpeedController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
+                                        <CheckBox.Background>
+                                            <SolidColorBrush Color="{Binding Stroke}" />
+                                        </CheckBox.Background>
+                                    </CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="nz" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
+                    </StackPanel>
+                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding NzController}" Grid.Row="2" Grid.Column="0" />
+                    <ListBox ItemsSource="{Binding NzController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="0" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
+                                        <CheckBox.Background>
+                                            <SolidColorBrush Color="{Binding Stroke}" />
+                                        </CheckBox.Background>
+                                    </CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <StackPanel Grid.Column="3" Grid.RowSpan="3">
+                        <GroupBox Margin="4" Header="Main">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="Mode:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.Mode}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="ERS:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.ErsMode}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="Battery Voltage:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.BatteryVoltage}" FontSize="14" Margin="0 10 0 0" />
+                                    <TextBlock Text ="V" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="GpsValid:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.GpsValid}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="Latitude:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.Latitude}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="Longitude:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.Longitude}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="GpsSpeed:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.GpsSpeed}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text ="GpsCourse:" FontSize="14" Margin="0 10 10 0" />
+                                    <TextBlock Text ="{Binding FlightData.GpsCourse}" FontSize="14" Margin="0 10 0 0" />
+                                </StackPanel>
+
+                                <Button Margin="0 10 0 0" Padding="5" Click="Button_Click">Clear</Button>
+
+                                <TextBlock FontSize="10" Margin="0 10 0 0">Port Name</TextBlock>
+                                <ComboBox Margin="0 5 0 0" ItemsSource="{Binding PortNames}" SelectedItem="{Binding PortName}" PreviewMouseLeftButtonDown="ComboBox_PreviewMouseLeftButtonDown"/>
+                                <TextBlock FontSize="10" Margin="0 10 0 0">Baud Rate</TextBlock>
+                                <ComboBox Margin="0 5 0 0" ItemsSource="{Binding BaudRates}" SelectedItem="{Binding BaudRate}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Margin="4" Header="PFD">
                             <StackPanel Margin="4">
                                 <CheckBox Margin="4" Content="Sky + Ground" IsChecked="{Binding PFDController.SkyGround}"/>
                                 <CheckBox Margin="4" Content="Pitch Scale" IsChecked="{Binding PFDController.PitchScale}"/>
@@ -412,45 +342,6 @@
                                 <CheckBox Margin="4" Content="Roll Scale" IsChecked="{Binding PFDController.RollScale}"/>
                                 <CheckBox Margin="4" Content="Indicator" IsChecked="{Binding PFDController.Indicator}"/>
                             </StackPanel>
-                        </GroupBox>
-                        <GroupBox Margin="4" Header="Parameters">
-
-                            <Grid Margin="4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="70"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" Text="Pitch"/>
-                                <TextBlock Grid.Row="2" Grid.Column="0" Margin="4" Text="Roll"/>
-                                <TextBlock Grid.Row="4" Grid.Column="0" Margin="4" Text="IAS"/>
-                                <TextBlock Grid.Row="6" Grid.Column="0" Margin="4" Text="Altitude"/>
-                                <TextBlock Grid.Row="8" Grid.Column="0" Margin="4" Text="Heading"/>
-
-                                <Slider Grid.Row="1" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.PitchMin}" Maximum="{x:Static pfd:Globals.PitchMax}" Value="{Binding PFDController.Pitch}" />
-                                <Slider Grid.Row="3" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.RollMin}" Maximum="{x:Static pfd:Globals.RollMax}" Value="{Binding PFDController.Roll}" />
-                                <Slider Grid.Row="5" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.AltitudeMin}" Maximum="{x:Static pfd:Globals.AltitudeMax}" Value="{Binding PFDController.Altitude}"/>
-                                <Slider Grid.Row="7" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.IASMin}" Maximum="{x:Static pfd:Globals.IASMax}" Value="{Binding PFDController.IAS}"/>
-                                <Slider Grid.Row="9" Grid.ColumnSpan="3" Margin="4" Minimum="{x:Static pfd:Globals.HeadingMin}" Maximum="{x:Static pfd:Globals.HeadingMax}" Value="{Binding PFDController.Heading}"/>
-
-                                <TextBox Grid.Row="0" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Pitch, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBox Grid.Row="2" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Roll, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBox Grid.Row="4" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Altitude, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBox Grid.Row="6" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.IAS, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBox Grid.Row="8" Grid.Column="2" Margin="4" TextAlignment="Center" Text="{Binding PFDController.Heading, UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
                         </GroupBox>
                     </StackPanel>
                 </Grid>

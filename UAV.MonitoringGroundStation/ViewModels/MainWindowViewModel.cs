@@ -11,7 +11,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 using UAV.MonitoringGroundStation.Models;
 
 namespace UAV.MonitoringGroundStation.ViewModels
@@ -26,10 +28,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> BaroAltitudeController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> AirSpeedController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> OmegaTurnController { get; set; }
-
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> PitchController { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> RollController { get; set; }
-        public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> YawController { get; set; }
         public WpfGraphController<TimeSpanDataPoint, DoubleDataPoint> NzController { get; set; }
 
         public string PortName
@@ -72,6 +70,12 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
                 _flightData = value;
 
+                //Application.Current.Dispatcher.Invoke(() =>
+                //PFDController.Roll = 60
+                //);
+                //PFDController.Roll = 60;
+                //PFDController.Draw();
+
                 OnPropertyChanged(nameof(FlightData));
             }
         }
@@ -92,25 +96,30 @@ namespace UAV.MonitoringGroundStation.ViewModels
             SerialPortInitialize();
             ControllersInitialize();
 
+            var timer = new DispatcherTimer(DispatcherPriority.Send);
+            timer.Tick += UpdatePfd;
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Start();
+
             Task.Factory.StartNew(() =>
             {
                 string message = null;
                 TimeSpan x;
                 var player = new MediaPlayer();
                 var flightData = new FlightData();
+                message = "212819;9;57;-11;-50;15;-38;7636;0;220;1624;47;525;52;525;48;525;85;91;-14;1246;2510;0;0;38080810;55582000;1624;476;1;1257;700;0";
                 while (true)
                 {
                     try
                     {
-                        if (!serialPort.IsOpen)
-                            serialPort.Open();
+                        //if (!serialPort.IsOpen)
+                        //    serialPort.Open();
 
-                        message = serialPort.ReadLine();
-                        //message = "604630;0;1;0;1;-23;1;479;-1;-39;-124;0;0;0;0;40;600;60;300;450;600;1940;0";
+                        //message = serialPort.ReadLine();
 
                         flightData = flightDataExtractor.Extract(message);
 
-                        if(flightData.Mode != FlightData.Mode)
+                        if (flightData.Mode != FlightData.Mode)
                             SoundMode(player, flightData.Mode);
 
                         FlightData = flightData;
@@ -123,19 +132,26 @@ namespace UAV.MonitoringGroundStation.ViewModels
                         BaroAltitudeController.PushData(x, FlightData.BaroAltitudeCurrent);
                         OmegaTurnController.PushData(x, FlightData.OmegaTurn);
 
-                        PitchController.PushData(x, FlightData.Pitch);
-                        RollController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.RollDesired, FlightData.Roll });
-                        YawController.PushData(x, FlightData.Yaw);
-                        NzController.PushData(x, FlightData.Nz);
                         AirSpeedController.PushData(x, FlightData.GpsSpeed);
+
+                        Thread.Sleep(1000);
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        Thread.Sleep(10);
+                        Thread.Sleep(1000);
                     }
                 }
             });
+        }
+
+        private async void UpdatePfd(object obj, EventArgs args)
+        {
+            PFDController.Roll = FlightData.Roll;
+            PFDController.Pitch = FlightData.Pitch;
+            PFDController.Heading = FlightData.Yaw;
+            PFDController.Altitude = FlightData.BaroAltitudeCurrent;
+            PFDController.IAS = FlightData.GpsSpeed;
         }
 
         private void SerialPortInitialize()
@@ -256,49 +272,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
             AirSpeedController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
                 Name = "AirSpeed",
-                Stroke = Colors.Red,
-                StrokeThickness = strokeThickness
-            });
-
-            PitchController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            PitchController.Range.MaximumX = TimeSpan.FromSeconds(10);
-            PitchController.Range.AutoY = true;
-            PitchController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
-
-            PitchController.DataSeriesCollection.Add(new WpfGraphDataSeries()
-            {
-                Name = "Pitch",
-                Stroke = Colors.Red,
-                StrokeThickness = strokeThickness
-            });
-
-            RollController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            RollController.Range.MaximumX = TimeSpan.FromSeconds(10);
-            RollController.Range.AutoY = true;
-            RollController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
-
-            RollController.DataSeriesCollection.Add(new WpfGraphDataSeries()
-            {
-                Name = "Roll Desired",
-                Stroke = Colors.Green,
-                StrokeThickness = 3
-            });
-            RollController.DataSeriesCollection.Add(new WpfGraphDataSeries()
-            {
-                Name = "Roll",
-                Stroke = Colors.Red,
-                StrokeThickness = strokeThickness
-            });
-            
-
-            YawController = new WpfGraphController<TimeSpanDataPoint, DoubleDataPoint>();
-            YawController.Range.MaximumX = TimeSpan.FromSeconds(10);
-            YawController.Range.AutoY = true;
-            YawController.Range.AutoYFallbackMode = GraphRangeAutoYFallBackMode.MinMax;
-
-            YawController.DataSeriesCollection.Add(new WpfGraphDataSeries()
-            {
-                Name = "Yaw",
                 Stroke = Colors.Red,
                 StrokeThickness = strokeThickness
             });
