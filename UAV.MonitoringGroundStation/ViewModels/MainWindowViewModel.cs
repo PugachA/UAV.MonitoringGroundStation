@@ -70,12 +70,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
                 _flightData = value;
 
-                //Application.Current.Dispatcher.Invoke(() =>
-                //PFDController.Roll = 60
-                //);
-                //PFDController.Roll = 60;
-                //PFDController.Draw();
-
                 OnPropertyChanged(nameof(FlightData));
             }
         }
@@ -107,15 +101,15 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 TimeSpan x;
                 var player = new MediaPlayer();
                 var flightData = new FlightData();
-                message = "212819;9;57;-11;-50;15;-38;7636;0;220;1624;47;525;52;525;48;525;85;91;-14;1246;2510;0;0;38080810;55582000;1624;476;1;1257;700;0";
+                //message = "212819;9;57;-11;-50;15;-38;7636;0;220;1624;47;525;52;525;48;525;85;91;-14;1246;2510;0;0;38080810;55582000;1624;476;1;1257;700;0";
                 while (true)
                 {
                     try
                     {
-                        //if (!serialPort.IsOpen)
-                        //    serialPort.Open();
+                        if (!serialPort.IsOpen)
+                            serialPort.Open();
 
-                        //message = serialPort.ReadLine();
+                        message = serialPort.ReadLine();
 
                         flightData = flightDataExtractor.Extract(message);
 
