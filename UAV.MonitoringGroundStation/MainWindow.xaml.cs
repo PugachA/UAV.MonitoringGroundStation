@@ -6,15 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Device.Location;
+using System.Drawing;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using UAV.MonitoringGroundStation.Markers;
 using UAV.MonitoringGroundStation.Models;
 using UAV.MonitoringGroundStation.ViewModels;
 
@@ -31,7 +37,7 @@ namespace UAV.MonitoringGroundStation
         private List<GMapMarker> wayMarkerList;
 
         private PointLatLng planePoint = new PointLatLng(55.582000, 38.080810);
-        private GMapMarker planeMarker;
+        private PlaneMarker planeMarker;
 
         private PointLatLng stationPoint;
         private GMapMarker stationMarker;
@@ -41,13 +47,15 @@ namespace UAV.MonitoringGroundStation
             InitializeComponent();
             DataContext = new MainWindowViewModel();
 
+            InitializeGMap();
+
             watcher = new GeoCoordinateWatcher();
             watcher.StatusChanged += Watcher_StatusChanged;
             watcher.Start();
 
             var timer = new DispatcherTimer(DispatcherPriority.Send);
             timer.Tick += UpdateMap;
-            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Interval = TimeSpan.FromMilliseconds(250);
             timer.Start();
         }
 
@@ -78,13 +86,16 @@ namespace UAV.MonitoringGroundStation
                     stationMarker.Position = stationPoint;
 
                 if (planeMarker != null)
+                {
                     planeMarker.Position = planePoint;
+                    planeMarker.RotateMarker((float)viewModel.FlightData.GpsCourse);
+                }
 
                 if (gMapRoute is null)
                 {
                     var list = new List<PointLatLng> { planePoint, planePoint };
                     gMapRoute = new GMapRoute(list);
-                    gMapRoute.Shape = new Path() { Stroke = new SolidColorBrush(Colors.Red), StrokeThickness = 3, ToolTip = "Plane route" };
+                    gMapRoute.Shape = new System.Windows.Shapes.Path() { Stroke = new SolidColorBrush(Colors.Red), StrokeThickness = 3, ToolTip = "Plane route" };
 
                     gMap.Markers.Add(gMapRoute);
                 }
@@ -97,7 +108,7 @@ namespace UAV.MonitoringGroundStation
             }
         }
 
-        private void GMap_Loaded(object sender, RoutedEventArgs e)
+        private void InitializeGMap()
         {
             gMap.Bearing = 0;
             //Перетаскивание карты
@@ -135,23 +146,14 @@ namespace UAV.MonitoringGroundStation
             {
                 Width = 10,
                 Height = 10,
-                Stroke = Brushes.Blue,
-                Fill = Brushes.Blue,
+                Stroke = System.Windows.Media.Brushes.Blue,
+                Fill = System.Windows.Media.Brushes.Blue,
                 StrokeThickness = 1.5,
                 ToolTip = "Station"
             };
             gMap.Markers.Add(stationMarker);
 
-            planeMarker = new GMapMarker(stationPoint);
-            planeMarker.Shape = new Ellipse
-            {
-                Width = 7,
-                Height = 7,
-                Stroke = Brushes.Red,
-                Fill = Brushes.Red,
-                StrokeThickness = 1.5,
-                ToolTip = "Plane"
-            };
+            planeMarker = new PlaneMarker(stationPoint, -90);
             gMap.Markers.Add(planeMarker);
 
             var wayPoints = (ConfigurationManager.GetSection("WayPointSettings/WayPoints") as System.Collections.Hashtable)
@@ -165,15 +167,14 @@ namespace UAV.MonitoringGroundStation
                 var point = new PointLatLng(Convert.ToDouble(splitted[0]), Convert.ToDouble(splitted[1]));
 
                 var marker = new GMapMarker(point);
-                marker.Shape = new Ellipse
+                marker.Shape = new System.Windows.Controls.Image
                 {
-                    Width = 10,
-                    Height = 10,
-                    Stroke = Brushes.Green,
-                    Fill = Brushes.Green,
-                    StrokeThickness = 1.5,
+                    Width = 16,
+                    Height = 16,
+                    Source = new BitmapImage(new Uri(System.IO.Path.GetFullPath("Images/marker.png"))),
                     ToolTip = wayPoint.Key
                 };
+                marker.Offset = new System.Windows.Point(-8, -8);
 
                 wayMarkerList.Add(marker);
                 gMap.Markers.Add(marker);

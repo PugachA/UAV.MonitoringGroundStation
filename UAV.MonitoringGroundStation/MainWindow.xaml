@@ -238,7 +238,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <gmaps:GMapControl x:Name="gMap" Loaded="GMap_Loaded" Grid.Row="0" Grid.Column="0"/>
+                    <gmaps:GMapControl x:Name="gMap" Grid.Row="0" Grid.Column="0"/>
 
                     <Viewbox Stretch="UniformToFill" Margin="4" Grid.Row="0" Grid.Column="1">
                         <Canvas Background="Black" ClipToBounds="True" Width="{x:Static pfd:Globals.PFDHeight}" Height="{x:Static pfd:Globals.PFDHeight}">

@@ -101,7 +101,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
                 TimeSpan x;
                 var player = new MediaPlayer();
                 var flightData = new FlightData();
-                //message = "212819;9;57;-11;-50;15;-38;7636;0;220;1624;47;525;52;525;48;525;85;91;-14;1246;2510;0;0;38080810;55582000;1624;476;1;1257;700;0";
+                //message = "212819;9;57;-11;-50;15;-38;7636;0;220;1624;47;525;52;525;48;525;85;91;-14;1246;2510;0;0;38080810;55582000;1624;476;1;1750;700;0";
                 while (true)
                 {
                     try
