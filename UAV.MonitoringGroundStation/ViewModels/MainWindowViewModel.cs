@@ -92,7 +92,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
             var timer = new DispatcherTimer(DispatcherPriority.Send);
             timer.Tick += UpdatePfd;
-            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Start();
 
             Task.Factory.StartNew(() =>
@@ -139,7 +139,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
         private async void UpdatePfd(object obj, EventArgs args)
         {
-            PFDController.Roll = FlightData.Roll;
+            PFDController.Roll = (-1)*FlightData.Roll;
             PFDController.Pitch = FlightData.Pitch;
             PFDController.Heading = FlightData.Yaw;
             PFDController.Altitude = FlightData.BaroAltitudeCurrent;

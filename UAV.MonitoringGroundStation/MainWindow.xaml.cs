@@ -55,7 +55,7 @@ namespace UAV.MonitoringGroundStation
 
             var timer = new DispatcherTimer(DispatcherPriority.Send);
             timer.Tick += UpdateMap;
-            timer.Interval = TimeSpan.FromMilliseconds(250);
+            timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Start();
         }
 
