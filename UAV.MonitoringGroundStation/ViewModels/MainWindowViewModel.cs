@@ -127,8 +127,6 @@ namespace UAV.MonitoringGroundStation.ViewModels
                         OmegaTurnController.PushData(x, FlightData.OmegaTurn);
 
                         AirSpeedController.PushData(x, FlightData.GpsSpeed);
-
-                        Thread.Sleep(1000);
                     }
                     catch (Exception ex)
                     {
