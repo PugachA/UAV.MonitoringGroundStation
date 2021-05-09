@@ -14,29 +14,32 @@ namespace UAV.MonitoringGroundStation.Markers
 {
     public class PlaneMarker : GMapMarker
     {
-        private readonly Bitmap _bitmap;
+        private readonly Bitmap _planeBitmap;
+        private readonly string _toolTip;
 
-        public PlaneMarker(PointLatLng pos, float initialAngel) : base(pos)
+        public PlaneMarker(PointLatLng pos, string imagePath, float initialAngel, string toolTip = "Plane") : base(pos)
         {
-            _bitmap = new Bitmap(System.IO.Path.GetFullPath("Images\\plane.png"));
-            _bitmap = RotateBitmap(_bitmap, initialAngel);
+            _planeBitmap = new Bitmap(System.IO.Path.GetFullPath(imagePath));
+            _planeBitmap = RotateBitmap(_planeBitmap, initialAngel);
 
-            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(_bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(_bitmap.Width, _bitmap.Height));
+            _toolTip = toolTip;
+
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(_planeBitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(_planeBitmap.Width, _planeBitmap.Height));
 
             this.Shape = new System.Windows.Controls.Image
             {
-                Width = _bitmap.Width,
-                Height = _bitmap.Height,
+                Width = _planeBitmap.Width,
+                Height = _planeBitmap.Height,
                 Source = bitmapSource,
-                ToolTip = "Plane",
+                ToolTip = _toolTip,
             };
 
-            this.Offset = new System.Windows.Point(-(double)_bitmap.Width / 2, -(double)_bitmap.Height / 2);
+            this.Offset = new System.Windows.Point(-(double)_planeBitmap.Width / 2, -(double)_planeBitmap.Height / 2);
         }
 
         public void RotateMarker(float angel)
         {
-            var bitmap = RotateBitmap(_bitmap, angel);
+            var bitmap = RotateBitmap(_planeBitmap, angel);
 
             var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmap.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(bitmap.Width, bitmap.Height));
 
@@ -45,7 +48,7 @@ namespace UAV.MonitoringGroundStation.Markers
                 Width = bitmap.Width,
                 Height = bitmap.Height,
                 Source = bitmapSource,
-                ToolTip = "Plane",
+                ToolTip = _toolTip,
             };
         }
 

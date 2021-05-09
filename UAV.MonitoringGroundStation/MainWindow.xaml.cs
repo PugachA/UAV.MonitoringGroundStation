@@ -36,7 +36,7 @@ namespace UAV.MonitoringGroundStation
         private GMapRoute gMapRoute;
         private List<GMapMarker> wayMarkerList;
 
-        private PointLatLng planePoint = new PointLatLng(55.582000, 38.080810);
+        private PointLatLng planePoint;
         private PlaneMarker planeMarker;
 
         private PointLatLng stationPoint;
@@ -153,7 +153,7 @@ namespace UAV.MonitoringGroundStation
             };
             gMap.Markers.Add(stationMarker);
 
-            planeMarker = new PlaneMarker(stationPoint, -90);
+            planeMarker = new PlaneMarker(stationPoint, "Images\\plane_course_yellow.png", -90);
             gMap.Markers.Add(planeMarker);
 
             var wayPoints = (ConfigurationManager.GetSection("WayPointSettings/WayPoints") as System.Collections.Hashtable)
