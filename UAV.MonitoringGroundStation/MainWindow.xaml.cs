@@ -153,7 +153,7 @@ namespace UAV.MonitoringGroundStation
             };
             gMap.Markers.Add(stationMarker);
 
-            planeMarker = new PlaneMarker(stationPoint, "Images\\plane_course_yellow.png", -90);
+            planeMarker = new PlaneMarker(stationPoint, "Images\\plane_course.png", -90);
             gMap.Markers.Add(planeMarker);
 
             var wayPoints = (ConfigurationManager.GetSection("WayPointSettings/WayPoints") as System.Collections.Hashtable)
