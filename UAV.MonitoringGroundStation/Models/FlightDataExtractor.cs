@@ -47,6 +47,7 @@ namespace UAV.MonitoringGroundStation.Models
             var omegaZKi = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.OmegaZKi)]]);
 
             var baroAltitudeCurrent = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.BaroAltitudeCurrent)]]);
+            var baroAltitudeDesired = 0.1 * int.Parse(splittedData[_dataMapping[nameof(FlightData.BaroAltitudeDesired)]]);
 
             var velocityYCurrent = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYCurrent)]]);
             var velocityYDesired = 0.01 * int.Parse(splittedData[_dataMapping[nameof(FlightData.VelocityYDesired)]]);
@@ -95,6 +96,7 @@ namespace UAV.MonitoringGroundStation.Models
                 VelocityYKp = velocityYKp,
 
                 BaroAltitudeCurrent = baroAltitudeCurrent,
+                BaroAltitudeDesired = baroAltitudeDesired,
                 AirSpeed = airSpeed,
 
                 Pitch = pitch,

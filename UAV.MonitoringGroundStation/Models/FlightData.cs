@@ -16,6 +16,7 @@ namespace UAV.MonitoringGroundStation.Models
         public double OmegaZCurrent { get; set; }
         public double OmegaZDesired { get; set; }
         public double BaroAltitudeCurrent { get; set; }
+        public double BaroAltitudeDesired { get; set; }
         public double VelocityYCurrent { get; set; }
         public double VelocityYDesired { get; set; }
         public double AirSpeed { get; set; }

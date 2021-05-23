@@ -60,6 +60,8 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                         <TextBlock Text="Baro Altitude" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
+                        <TextBlock Text="Desired=" FontSize="14" Margin="10 0 0 0" />
+                        <TextBlock Text="{Binding FlightData.BaroAltitudeDesired}" FontSize="14" />
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding BaroAltitudeController}" Grid.Row="2" Grid.Column="1" />
                     <ListBox ItemsSource="{Binding BaroAltitudeController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1" >
@@ -256,24 +258,6 @@
                     </StackPanel>
                     <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding VelocityYController}" Grid.Row="3" Grid.Column="0" />
                     <ListBox ItemsSource="{Binding VelocityYController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="0" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsVisible}" >
-                                        <CheckBox.Background>
-                                            <SolidColorBrush Color="{Binding Stroke}" />
-                                        </CheckBox.Background>
-                                    </CheckBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-
-                    <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock Text="nz" FontSize="14" FontWeight="Bold" Margin="3 0 0 3" />
-                    </StackPanel>
-                    <local:WpfGraphControl Margin="3 0 0 3" Controller="{Binding NzController}" Grid.Row="3" Grid.Column="1" />
-                    <ListBox ItemsSource="{Binding NzController.DataSeriesCollection}" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="3" Grid.Column="1" >
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>

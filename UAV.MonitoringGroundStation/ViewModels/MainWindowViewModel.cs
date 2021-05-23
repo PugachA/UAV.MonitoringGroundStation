@@ -92,7 +92,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
             var timer = new DispatcherTimer(DispatcherPriority.Send);
             timer.Tick += UpdatePfd;
-            timer.Interval = TimeSpan.FromMilliseconds(20);
+            timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Start();
 
             Task.Factory.StartNew(() =>
@@ -123,7 +123,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
                         OmegaYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaYDesired, FlightData.OmegaYCurrent });
                         OmegaZController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.OmegaZDesired, FlightData.OmegaZCurrent });
                         VelocityYController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.VelocityYDesired, FlightData.VelocityYCurrent });
-                        BaroAltitudeController.PushData(x, FlightData.BaroAltitudeCurrent);
+                        BaroAltitudeController.PushData(new TimeSpanDataPoint[] { x, x }, new DoubleDataPoint[] { FlightData.BaroAltitudeDesired, FlightData.BaroAltitudeCurrent });
                         OmegaTurnController.PushData(x, FlightData.OmegaTurn);
 
                         AirSpeedController.PushData(x, FlightData.GpsSpeed);
@@ -239,6 +239,12 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
             BaroAltitudeController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
+                Name = "Altitude Desired",
+                Stroke = Colors.Green,
+                StrokeThickness = 3
+            });
+            BaroAltitudeController.DataSeriesCollection.Add(new WpfGraphDataSeries()
+            {
                 Name = "Baro Altitude",
                 Stroke = Colors.Red,
                 StrokeThickness = strokeThickness
@@ -263,7 +269,7 @@ namespace UAV.MonitoringGroundStation.ViewModels
 
             AirSpeedController.DataSeriesCollection.Add(new WpfGraphDataSeries()
             {
-                Name = "AirSpeed",
+                Name = "GpsSpeed",
                 Stroke = Colors.Red,
                 StrokeThickness = strokeThickness
             });

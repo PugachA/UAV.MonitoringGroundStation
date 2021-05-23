@@ -55,7 +55,7 @@ namespace UAV.MonitoringGroundStation
 
             var timer = new DispatcherTimer(DispatcherPriority.Send);
             timer.Tick += UpdateMap;
-            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Interval = TimeSpan.FromMilliseconds(200);
             timer.Start();
         }
 
@@ -82,9 +82,6 @@ namespace UAV.MonitoringGroundStation
                 planePoint.Lat = viewModel.FlightData.Latitude;
                 planePoint.Lng = viewModel.FlightData.Longitude;
 
-                if (stationMarker != null)
-                    stationMarker.Position = stationPoint;
-
                 if (planeMarker != null)
                 {
                     planeMarker.Position = planePoint;
@@ -106,6 +103,9 @@ namespace UAV.MonitoringGroundStation
 
                 gMap.Position = planePoint;
             }
+
+            if (stationMarker != null)
+                stationMarker.Position = stationPoint;
         }
 
         private void InitializeGMap()
@@ -122,7 +122,7 @@ namespace UAV.MonitoringGroundStation
             //Скрытие внешней сетки карты
             gMap.ShowTileGridLines = false;
             //Начальный зум
-            gMap.Zoom = 16;
+            gMap.Zoom = 14;
             //Убрать красный крестик
             gMap.ShowCenter = false;
             gMap.MapProvider = GMapProviders.GoogleHybridMap;
