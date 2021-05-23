@@ -59,10 +59,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Markers\PlaneMarker.cs" />
-    <Compile Include="Models\ControlledData.cs" />
     <Compile Include="Models\FlightData.cs" />
     <Compile Include="Models\FlightDataExtractor.cs" />
-    <Compile Include="Models\FlightDataMapping.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="WpfGraphControl.cs" />
     <Page Include="MainWindow.xaml">
